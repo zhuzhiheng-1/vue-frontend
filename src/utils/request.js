@@ -3,87 +3,78 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-// create an axios instance
+// 创建一个 axios 实例
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  baseURL: process.env.VUE_APP_BASE_API, // 请求的基础 URL，这里使用了环境变量
+  timeout: 5000 // 请求超时时间为 5 秒
 })
 
-// request interceptor
+// 请求拦截器
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
+    // 在发送请求之前做些什么
 
     if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
+      // 如果用户已登录，将 token 添加到请求头中
       config.headers['X-Token'] = getToken()
     }
     return config
   },
   error => {
-    // do something with request error
-    console.log(error) // for debug
+    // 处理请求错误
+    console.log(error) // 打印错误日志，供调试使用
     return Promise.reject(error)
   }
 )
 
-// response interceptor
+// 响应拦截器
 service.interceptors.response.use(
-  /**
-   * If you want to get http information such as headers or status
-   * Please return  response => response
-  */
-
-  /**
-   * Determine the request status by custom code
-   * Here is just an example
-   * You can also judge the status by HTTP Status Code
-   */
   response => {
     const res = response.data
 
-    // if the custom code is not 200, it is judged as an error.
+    // 判断响应状态码是否为 200，如果不是则判断为错误
     if (response.status !== 200) {
+      // 显示错误消息
       Message({
         message: res.message || 'Error',
         type: 'error',
         duration: 3 * 1000
       })
 
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+      // 处理特定的错误状态码
       if (res.status === 50008 || res.status === 50012 || res.status === 50014) {
-        // to re-login
+        // 重新登录逻辑，这里可能需要修改，因为 location.reload() 会重新加载整个页面
         MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
           confirmButtonText: 'Re-Login',
           cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           store.dispatch('user/resetToken').then(() => {
+            // location.reload() 重新加载整个页面，可能不符合需求，需要修改
             location.reload()
           })
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(res.message || 'Error')) // 返回 Promise.reject 以传递错误给调用方
     } else {
+      // 显示成功消息
       Message({
         message: res.message || 'Success',
         type: 'success',
         duration: 3 * 1000
       })
-      return res
+      return res // 返回响应数据
     }
   },
   error => {
-    console.log('err' + error) // for debug
+    console.log('err' + error) // 打印错误日志，供调试使用
+    // 显示错误消息
     Message({
       message: error.message,
       type: 'error',
       duration: 5 * 1000
     })
-    return Promise.reject(error)
+    return Promise.reject(error) // 返回 Promise.reject 以传递错误给调用方
   }
 )
 

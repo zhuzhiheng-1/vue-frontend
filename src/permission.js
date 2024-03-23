@@ -1,7 +1,7 @@
 // 导入路由、状态管理器、消息提示组件、进度条插件、工具函数等
 import router from './router'
 import store from './store'
-// import { Message } from 'element-ui' // Element UI 提供的消息提示组件
+import { Message } from 'element-ui' // Element UI 提供的消息提示组件
 import NProgress from 'nprogress' // 进度条插件，用于展示页面加载进度
 import 'nprogress/nprogress.css' // 进度条样式
 import { getToken } from '@/utils/auth' // 从 cookie 中获取用户 token
@@ -42,10 +42,10 @@ router.beforeEach(async(to, from, next) => {
           next() // 获取信息成功后跳转到目标页面
         } catch (error) {
           // 获取用户信息失败，可能是 token 失效等原因，需要重新登录
-          console.log(error)
-          // await store.dispatch('user/resetToken') // 清除 token
-          // Message.error(error || '发生错误') // 显示错误消息
-          // next(`/login?redirect=${to.path}`) // 跳转到登录页面，并记录之前的页面路径用于登录成功后的重定向
+          // console.log(error)
+          await store.dispatch('user/resetToken') // 清除 token
+          Message.error(error || '发生错误') // 显示错误消息
+          next(`/login?redirect=${to.path}`) // 跳转到登录页面，并记录之前的页面路径用于登录成功后的重定向
           NProgress.done() // 完成加载进度条
         }
       }
