@@ -1,17 +1,24 @@
 <template>
+  <!-- 只有当菜单项不隐藏时才渲染 -->
   <div v-if="!item.hidden">
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+    <!-- 如果只有一个子菜单项需要显示，且当前菜单项不是始终显示的，则渲染链接 -->
+    <template v-if="hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
+        <!-- 渲染 el-menu-item 组件 -->
+        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown': !isNest}">
+          <!-- 渲染菜单项内容 -->
+          <item :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)" :title="onlyOneChild.meta.title" />
         </el-menu-item>
       </app-link>
     </template>
 
+    <!-- 否则渲染 el-submenu 组件 -->
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
+      <!-- 设置子菜单的标题 -->
       <template slot="title">
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
       </template>
+      <!-- 递归渲染子菜单项 -->
       <sidebar-item
         v-for="child in item.children"
         :key="child.path"
@@ -36,51 +43,55 @@ export default {
   components: { Item, AppLink },
   mixins: [FixiOSBug],
   props: {
-    // route object
+    // 路由对象
     item: {
       type: Object,
       required: true
     },
+    // 是否嵌套子菜单
     isNest: {
       type: Boolean,
       default: false
     },
+    // 基础路径
     basePath: {
       type: String,
       default: ''
     }
   },
   data() {
-    // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
-    // TODO: refactor with render function
+    // 用于修复 https://github.com/PanJiaChen/vue-admin-template/issues/237
+    // TODO: 使用 render 函数进行重构
     this.onlyOneChild = null
     return {}
   },
   methods: {
+    // 判断是否只有一个子菜单项需要显示
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {
         if (item.hidden) {
           return false
         } else {
-          // Temp set(will be used if only has one showing child)
+          // 临时设置（只有一个显示的子菜单项时将被使用）
           this.onlyOneChild = item
           return true
         }
       })
 
-      // When there is only one child router, the child router is displayed by default
+      // 当只有一个子路由时，默认显示该子路由
       if (showingChildren.length === 1) {
         return true
       }
 
-      // Show parent if there are no child router to display
+      // 如果没有子路由需要显示，则显示父路由
       if (showingChildren.length === 0) {
-        this.onlyOneChild = { ... parent, path: '', noShowingChildren: true }
+        this.onlyOneChild = { ...parent, path: '', noShowingChildren: true }
         return true
       }
 
       return false
     },
+    // 解析路径，处理外部链接
     resolvePath(routePath) {
       if (isExternal(routePath)) {
         return routePath

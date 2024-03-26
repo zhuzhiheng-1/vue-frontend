@@ -16,12 +16,6 @@
               Home
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">Log Out</span>
           </el-dropdown-item>
@@ -73,6 +67,7 @@ export default {
     float: left;
     cursor: pointer;
     transition: background .3s;
+    // 在移动设备上点击元素时防止默认的高亮效果出现
     -webkit-tap-highlight-color:transparent;
 
     &:hover {

@@ -68,31 +68,31 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/scores/theoretical',
     name: 'Scores',
-    meta: { title: '实验成绩', icon: 'el-icon-s-marketing', roles: ['admin', 'student', 'teacher'] },
+    meta: { title: '实验成绩', icon: 'el-icon-s-marketing', roles: ['admin', 'student'] },
     children: [
       {
         path: 'theoretical',
         name: 'TheoreticalScores',
         component: () => import('@/views/scores/theoretical/index'),
-        meta: { title: '理论实验成绩', icon: 'el-icon-s-flag', roles: ['admin', 'student', 'teacher'] }
+        meta: { title: '理论实验成绩', icon: 'el-icon-s-flag', roles: ['admin', 'student'] }
       },
       {
         path: 'basic',
         name: 'BasicScores',
         component: () => import('@/views/scores/basic/index'),
-        meta: { title: '基础实验成绩', icon: 'el-icon-s-flag', roles: ['admin', 'student', 'teacher'] }
+        meta: { title: '基础实验成绩', icon: 'el-icon-s-flag', roles: ['admin', 'student'] }
       },
       {
         path: 'extension',
         name: 'ExtensionScores',
         component: () => import('@/views/scores/extension/index'),
-        meta: { title: '拓展实验成绩', icon: 'el-icon-s-flag', roles: ['admin', 'student', 'teacher'] }
+        meta: { title: '拓展实验成绩', icon: 'el-icon-s-flag', roles: ['admin', 'student'] }
       },
       {
         path: 'total',
         name: 'TotalScores',
         component: () => import('@/views/scores/total/index'),
-        meta: { title: '总分', icon: 'el-icon-s-flag', roles: ['admin', 'student', 'teacher'] }
+        meta: { title: '总分', icon: 'el-icon-s-flag', roles: ['admin', 'student'] }
       }
     ]
   },
@@ -104,8 +104,8 @@ export const asyncRoutes = [
     meta: { icon: 'el-icon-user', roles: ['admin', 'teacher'] },
     children: [
       {
-        path: 'teacher-list',
-        name: 'TeacherList',
+        path: 'user-list',
+        name: 'UserList',
         component: () => import('@/views/user/index'),
         meta: { title: '用户列表', icon: 'el-icon-user', roles: ['admin', 'teacher'] }
       }
