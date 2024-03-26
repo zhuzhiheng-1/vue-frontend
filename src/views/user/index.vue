@@ -63,7 +63,7 @@
     >
       <el-form :model="editForm" label-width="100px">
         <el-form-item label="学号">
-          <el-input v-model="editForm.student_id" />
+          <el-input v-model="editForm.student_id" disabled />
         </el-form-item>
         <el-form-item label="姓名">
           <el-input v-model="editForm.nickname" />
