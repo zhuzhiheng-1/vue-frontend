@@ -40,25 +40,25 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/experiment/theoretical',
     name: 'Experiment',
-    meta: { title: '实验内容', icon: 'el-icon-s-help', roles: ['admin', 'student'] },
+    meta: { title: '实验内容', icon: 'el-icon-s-help', roles: ['student'] },
     children: [
       {
         path: 'theoretical',
         name: 'Theoretical',
         component: () => import('@/views/experiment/theoretical/index'),
-        meta: { title: '理论实验', icon: 'el-icon-s-flag', roles: ['admin', 'student'] }
+        meta: { title: '理论实验', icon: 'el-icon-s-flag', roles: ['student'] }
       },
       {
         path: 'basic',
         name: 'Basic',
         component: () => import('@/views/experiment/basic/index'),
-        meta: { title: '基础实验', icon: 'el-icon-s-flag', roles: ['admin', 'student'] }
+        meta: { title: '基础实验', icon: 'el-icon-s-flag', roles: ['student'] }
       },
       {
         path: 'extension',
         name: 'Extension',
         component: () => import('@/views/experiment/extension/index'),
-        meta: { title: '拓展实验', icon: 'el-icon-s-flag', roles: ['admin', 'student'] }
+        meta: { title: '拓展实验', icon: 'el-icon-s-flag', roles: ['student'] }
       }
     ]
   },
@@ -68,31 +68,31 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/scores/theoretical',
     name: 'Scores',
-    meta: { title: '实验成绩', icon: 'el-icon-s-marketing', roles: ['admin', 'student'] },
+    meta: { title: '实验成绩', icon: 'el-icon-s-marketing', roles: ['student'] },
     children: [
       {
         path: 'theoretical',
         name: 'TheoreticalScores',
         component: () => import('@/views/scores/theoretical/index'),
-        meta: { title: '理论实验成绩', icon: 'el-icon-s-flag', roles: ['admin', 'student'] }
+        meta: { title: '理论实验成绩', icon: 'el-icon-s-flag', roles: ['student'] }
       },
       {
         path: 'basic',
         name: 'BasicScores',
         component: () => import('@/views/scores/basic/index'),
-        meta: { title: '基础实验成绩', icon: 'el-icon-s-flag', roles: ['admin', 'student'] }
+        meta: { title: '基础实验成绩', icon: 'el-icon-s-flag', roles: ['student'] }
       },
       {
         path: 'extension',
         name: 'ExtensionScores',
         component: () => import('@/views/scores/extension/index'),
-        meta: { title: '拓展实验成绩', icon: 'el-icon-s-flag', roles: ['admin', 'student'] }
+        meta: { title: '拓展实验成绩', icon: 'el-icon-s-flag', roles: ['student'] }
       },
       {
         path: 'total',
         name: 'TotalScores',
         component: () => import('@/views/scores/total/index'),
-        meta: { title: '总分', icon: 'el-icon-s-flag', roles: ['admin', 'student'] }
+        meta: { title: '总分', icon: 'el-icon-s-flag', roles: ['student'] }
       }
     ]
   },
@@ -101,13 +101,27 @@ export const asyncRoutes = [
     path: '/user',
     component: Layout,
     name: 'User',
-    meta: { icon: 'el-icon-user', roles: ['admin', 'teacher'] },
+    meta: { icon: 'el-icon-user', roles: ['teacher'] },
     children: [
       {
-        path: 'user-list',
+        path: 'user',
         name: 'UserList',
         component: () => import('@/views/user/index'),
-        meta: { title: '用户列表', icon: 'el-icon-user', roles: ['admin', 'teacher'] }
+        meta: { title: '学生列表', icon: 'el-icon-user', roles: ['teacher'] }
+      }
+    ]
+  },
+  {
+    path: '/alluser',
+    component: Layout,
+    name: 'AllUser',
+    meta: { icon: 'el-icon-user', roles: ['admin'] },
+    children: [
+      {
+        path: 'alluser',
+        name: 'AllUserList',
+        component: () => import('@/views/alluser/index'),
+        meta: { title: '用户列表', icon: 'el-icon-user', roles: ['admin'] }
       }
     ]
   },
