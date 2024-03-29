@@ -26,8 +26,8 @@ const getters = {
   // 获取markedLines
   markedLines: state => state.markedList.markedLines,
 
-  // 获取动画的frames
-  frames: state => state.animation.frames,
+  // 获取动画的actions
+  actions: state => state.animation.actions,
 
   // 获取填空题的code
   fillincode: state => state.code.fillincode,

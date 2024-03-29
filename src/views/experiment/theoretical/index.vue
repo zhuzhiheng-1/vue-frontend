@@ -1,13 +1,18 @@
 <template>
   <div>
-    理论实验
+    <CommonNavbar />
   </div>
 </template>
 
 <script>
+import CommonNavbar from '@/components/CommonNavbar'
 export default {
-
+  components: {
+    CommonNavbar
+  }
 }
 </script>
 
-<style></style>
+<style>
+
+</style>
