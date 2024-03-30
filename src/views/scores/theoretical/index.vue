@@ -3,7 +3,7 @@
     <template>
       <el-table
         v-loading="listLoading"
-        :data="[studentGrade]"
+        :data="studentGrade"
         element-loading-text="加载中"
         border
         fit
@@ -42,7 +42,7 @@ import { getUserGrade } from '@/api/grade'
 export default {
   data() {
     return {
-      studentGrade: {}, // 学生成绩数据
+      studentGrade: [], // 学生成绩数据
       listLoading: false // 是否加载中
     }
   },
