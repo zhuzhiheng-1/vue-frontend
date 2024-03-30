@@ -8,6 +8,8 @@ const getters = {
   avatar: state => state.user.avatar,
 
   name: state => state.user.name,
+
+  student_id: state => state.user.student_id,
   // 获取用户角色信息
   roles: state => state.user.roles,
 
