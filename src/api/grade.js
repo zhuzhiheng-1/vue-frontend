@@ -43,3 +43,11 @@ export function getUserGrade(student_id) {
   })
 }
 
+// 提交成绩
+export function submitGrade(data) {
+  return request({
+    url: '/grade/submit',
+    method: 'post',
+    data
+  })
+}

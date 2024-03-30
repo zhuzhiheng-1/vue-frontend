@@ -98,6 +98,8 @@ export default {
             }))
             this.calculateTotalScore()
             this.dialogVisible = true
+            // 将总分存储在本地
+            localStorage.setItem('basicScores', this.totalScore.toString())
             this.isSubmitted = true
           })
           .catch(() => {

@@ -43,6 +43,8 @@
 
 <script>
 import draggable from 'vuedraggable'
+import { submitGrade } from '@/api/grade'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -55,14 +57,16 @@ export default {
       correctOrder: [1, 2, 3, 4, 5],
       dialogVisible: false,
       isAbandoned: false,
-      submitted: false // 新增 submitted 状态
+      submitted: false, // 新增 submitted 状态
+      totalScore: 0
     }
   },
   computed: {
-    totalScore() {
-      // eslint-disable-next-line max-len
-      return this.isAbandoned ? 0 : this.list.reduce((score, item, index) => (item === this.correctOrder[index] ? score + 2 : score), 0)
-    }
+    // totalScore() {
+    //   // eslint-disable-next-line max-len
+    //   return this.isAbandoned ? 0 : this.list.reduce((score, item, index) => (item === this.correctOrder[index] ? score + 2 : score), 0)
+    // }
+    ...mapGetters(['student_id'])
   },
   methods: {
     checkOrder() {
@@ -85,6 +89,29 @@ export default {
     submit() {
       if (!this.submitted) {
         this.dialogVisible = true
+        this.totalScore = this.isAbandoned ? 0 : this.list.reduce((score, item, index) => (item === this.correctOrder[index] ? score + 2 : score), 0)
+        // 将总分存储在本地
+        localStorage.setItem('extensionScores', this.totalScore.toString())
+        const basicScores = localStorage.getItem('basicScores')
+        const theoryScores = localStorage.getItem('theoryScores')
+        const extensionScores = localStorage.getItem('extensionScores')
+        const data = {
+          student_id: this.student_id, // 替换为实际的学生 ID
+          theory_score: theoryScores,
+          basic_score: basicScores,
+          extension_score: extensionScores
+        }
+        // 提交成绩
+        submitGrade(data).then(response => {
+          console.log(response) // 打印成功响应信息
+          // 在提交成功后清除本地数据
+          localStorage.removeItem('basicScores')
+          localStorage.removeItem('theoryScores')
+          localStorage.removeItem('extensionScores')
+        }).catch(error => {
+          console.error(error) // 打印错误信息
+        })
+
         this.submitted = true // 用户提交后将 submitted 设置为 true
       }
     },

@@ -174,14 +174,15 @@ export default {
       // 弹窗可见状态
       dialogVisible: false,
       // 答题结果
-      results: []
+      results: [],
+      totalScore: 0
     }
   },
   computed: {
-    // 计算总得分
-    totalScore() {
-      return this.results.filter((result) => result.isCorrect).length * 2
-    }
+    // // 计算总得分
+    // totalScore() {
+    //   return this.results.filter((result) => result.isCorrect).length * 2
+    // }
   },
   methods: {
     // 提交答案
@@ -204,6 +205,11 @@ export default {
               isCorrect: this.userAnswers[index] === question.correctAnswer
             }))
             this.dialogVisible = true
+            // 计算总得分
+            this.totalScore = this.results.filter((result) => result.isCorrect).length * 2
+
+            // 将总分存储在本地
+            localStorage.setItem('theoryScores', this.totalScore.toString())
           })
           .catch(() => {
           // 用户点击取消，不进行任何操作
