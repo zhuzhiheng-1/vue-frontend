@@ -36,7 +36,7 @@ router.beforeEach(async(to, from, next) => {
         try {
           // 获取用户信息，通常是通过接口请求获取用户信息并保存到状态管理器中
           const data = await store.dispatch('user/getInfo')
-          console.log(data.role)
+          // console.log(data.role)
           const accessRoutes = await store.dispatch('permission/generateRoutes', data.role)
           router.options.routes = store.getters.permission_routes
           router.addRoutes(accessRoutes)

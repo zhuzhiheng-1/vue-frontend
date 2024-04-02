@@ -56,7 +56,7 @@ const mutations = {
 const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
-      console.log('Before filterAsyncRoutes, asyncRoutes:', asyncRoutes)
+      // console.log('Before filterAsyncRoutes, asyncRoutes:', asyncRoutes)
       let accessedRoutes
       if (roles.includes('admin') || roles.includes('teacher') || roles.includes('student')) {
         // 如果角色包含管理员、老师或学生，则根据角色设置相应的路由

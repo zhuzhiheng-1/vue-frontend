@@ -36,6 +36,19 @@ export const constantRoutes = [
 // 动态路由（需要权限）
 export const asyncRoutes = [
   {
+    path: '/profile',
+    component: Layout,
+    meta: { icon: 'el-icon-user', roles: ['student', 'teacher', 'admin'] },
+    children: [
+      {
+        path: 'index',
+        name: 'Profile',
+        component: () => import('@/views/profile/index'),
+        meta: { title: '个人中心', icon: 'el-icon-user', roles: ['student', 'teacher', 'admin'] }
+      }
+    ]
+  },
+  {
     path: '/experiment',
     component: Layout,
     redirect: '/experiment/theoretical',

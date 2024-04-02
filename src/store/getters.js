@@ -9,7 +9,16 @@ const getters = {
 
   name: state => state.user.name,
 
+  id: state => state.user.id,
+
   student_id: state => state.user.student_id,
+
+  classname: state => state.user.classname,
+
+  nickname: state => state.user.nickname,
+
+  major: state => state.user.major,
+
   // 获取用户角色信息
   roles: state => state.user.roles,
 
