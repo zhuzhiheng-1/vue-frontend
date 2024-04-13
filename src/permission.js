@@ -7,7 +7,7 @@ import 'nprogress/nprogress.css' // 进度条样式
 import { getToken } from '@/utils/auth' // 从 cookie 中获取用户 token
 import getPageTitle from '@/utils/get-page-title' // 获取页面标题的工具函数
 
-NProgress.configure({ showSpinner: false }) // 配置进度条，不显示加载中动画
+// NProgress.configure({ showSpinner: false }) // 配置进度条，不显示加载中动画
 
 const whiteList = ['/login', '/404'] // 定义一个白名单，包含不需要权限验证的页面路径
 
@@ -21,7 +21,7 @@ router.beforeEach(async(to, from, next) => {
 
   // 检查用户是否已经登录，通过检查 token 的存在与否来判断
   const hasToken = getToken()
-
+  NProgress.done() // 完成加载进度条
   if (hasToken) { // 如果存在 token，表示用户已登录
     if (to.path === '/login') {
       // 如果已经登录且访问的是登录页面，则重定向到首页
